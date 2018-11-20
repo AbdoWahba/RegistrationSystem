@@ -7,51 +7,42 @@ from PIL import Image, ImageTk
 import json
 
 
-class Application(Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self['bg'] = 'white'
-        self.pack(expand=True, fill=BOTH)
+class Application:
+    def __init__(self, master):
 
-        title_font = font.Font(family="Times", size=24)
-        font1 = font.Font(family="Helvetica", size=14)
-        style = ttk.Style()
+        master.title("ACES Expo Registration'19")
+        master.configure(background='#ededed')
 
-        # style.theme_settings("default", {
-        #     "TCombobox": {
-        #         "configure": {"padding": 5},
-        #         "map": {
-        #             "background": [("active", "green2"),
-        #                            ("!disabled", "green4")],
-        #             "fieldbackground": [("!disabled", "green3")],
-        #             "foreground": [("focus", "OliveDrab1"),
-        #                            ("!disabled", "OliveDrab2")]
-        #         }
-        #     }
-        # })
+        self.style = ttk.Style()
+        self.style.configure('TFrame', background='#ffffff')
+        self.style.configure('TButton', background='#009b45',
+                             foreground='#ffffff', relief='flat')
+        self.style.configure('TCombobox', background='#ffffff')
+        self.style.configure('TLabel', background='#ffffff',
+                             font=('Helvetica', 14))
+        self.style.configure('Header.TLabel', font=('Times', 24))
 
-        self.frame = ttk.Frame(self)
+        self.frame = ttk.Frame(master)
         self.frame.place(relx=0.5, anchor='n', relwidth=0.3)
 
         # Header frame
         self.frame_header = ttk.Frame(self.frame)
-        self.frame_header.pack(fill=X, expand=1)
+        self.frame_header.pack(pady=(20, 50))
 
         self.logo_img = ImageTk.PhotoImage(Image.open("acesLogo.png"))
-        Label(self.frame_header, image=self.logo_img, bd=0,
-              bg='white').pack(fill=X, expand=1)
+        ttk.Label(self.frame_header,
+                  image=self.logo_img).pack()
 
-        Label(self.frame_header, text="ACES Expo Registration'19",
-              bd=0, bg='white', pady=10, font=title_font).pack(fill=X, expand=1)
+        ttk.Label(self.frame_header, text="ACES Expo Registration'19",
+                  style='Header.TLabel').pack(pady=(10, 0))
 
         # Form frame
         self.frame_form = ttk.Frame(self.frame)
-        self.frame_form.pack(fill=X, expand=1)
+        self.frame_form.pack(fill=BOTH, expand=1)
 
         # Days label
-        ttk.Label(self.frame_form, text="Booth Day:",
-                  background='white', font=font1).pack(fill=X, expand=1)
+        ttk.Label(self.frame_form, text="Booth Day:").pack(fill=X, expand=1,
+                                                           pady=(10, 2), padx=10)
 
         # Combo Box
         self.days_var = IntVar()
@@ -59,22 +50,25 @@ class Application(Frame):
         days_combo = ttk.Combobox(self.frame_form, values=days,
                                   state="readonly", height=6,
                                   textvariable=self.days_var)
-        days_combo.pack(fill=X, expand=1)
+        days_combo.set(1)
+        days_combo.pack(fill=X, expand=1, padx=10)
 
         # Email label
-        ttk.Label(self.frame_form, text="Email:",
-                  background='white', font=font1).pack(fill=X, expand=1)
+        ttk.Label(self.frame_form, text="Email:").pack(fill=X, expand=1,
+                                                       pady=(200, 2), padx=10)
 
         # Email entry
         self.email_var = StringVar()
-        self.entry_email = ttk.Entry(self.frame_form, textvariable=self.email_var)
-        self.entry_email.pack(fill=X, expand=1)
+        self.entry_email = ttk.Entry(self.frame_form,
+                                     textvariable=self.email_var,
+                                     font=('Arial', 10))
+        self.entry_email.pack(fill=X, expand=1, padx=10)
 
         # Submit button
-        ttk.Style().configure("TButton", relief="flat",
-                              background="#00ff00")
+        # ttk.Style().configure("TButton", relief="flat",
+        #                       background="#00ff00")
         btn = ttk.Button(self.frame_form, text="Save", command=self.submit)
-        btn.pack()
+        btn.pack(pady=(300, 80))
 
     # Submit the email to txt file
     def submit(self):
@@ -99,4 +93,4 @@ class Application(Frame):
 root = Tk()
 root.geometry('1300x500+200+200')
 app = Application(master=root)
-app.mainloop()
+root.mainloop()
