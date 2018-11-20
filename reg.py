@@ -1,7 +1,7 @@
 from tkinter import *
 import json
 from PIL import ImageTk, Image
-import tkFont
+import tkinter.font
 
 def submit():
    email = str(emailVar.get())
