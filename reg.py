@@ -1,4 +1,4 @@
-from Tkinter import *
+from tkinter import *
 import json
 from PIL import ImageTk, Image
 import tkFont
