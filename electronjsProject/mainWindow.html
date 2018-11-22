@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Expo Reg System</title>
+</head>
+<style>
+    input[type=email], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    button[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    button[type=submit]:hover {
+        background-color: #45a049;
+    }
+    
+    div {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+    </style>
+<body >
+    <img src="./acesLogo.png" alt="ACES logo"  > 
+    <h1>ACES Expo Regestration System</h1>
+    <div>
+        
+                <label >Day</label>
+                <select id="country" name="Day">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+        
+    <form>
+    <label >E-mail</label>
+    <input type="email" id="mail" name="E-mail" placeholder="Enter Email">
+    <button type="submit">Submit</button>
+  </form>
+</div>
+<script>
+    const electron = require('electron');
+    const {ipcRenderer} = electron ;
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', submitForm);
+
+    function submitForm(e){
+        e.preventDefault();
+        const regEmail =document.querySelector('#mail').value;
+        const regDay =document.querySelector('#country').value;
+        let item = {'email':regEmail, 'fday':regDay}
+        if(regEmail != ''){
+            ipcRenderer.send('item:add', item);
+            document.getElementById("mail").value = "";
+        }
+        
+        
+    }
+</script>
+
+</body>
+</html> 
